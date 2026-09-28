@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Cognitive Aptitude Assessment (GCAA)</title>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --border: #e2e8f0;
+            --text-main: #334155;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
+
+        .logo-area {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        h1 { font-size: 1.6rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; letter-spacing: -0.5px; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 32px; }
+        
+        .quiz-box { display: none; }
+        .quiz-box.active { display: block; }
+
+        .question { font-size: 1.15rem; font-weight: 600; color: var(--primary); margin-bottom: 28px; line-height: 1.6; text-align: left; }
+        
+        .options { display: flex; flex-direction: column; gap: 14px; }
+        .option-btn {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            text-align: left;
+        }
+        .option-btn:hover { background-color: #f1f5f9; border-color: var(--text-muted); }
+
+        .start-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 16px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.15s;
+            margin-top: 10px;
+        }
+        .start-btn:hover { background-color: var(--accent); }
+
+        .ad-space {
+            background: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            color: var(--text-muted);
+            padding: 12px;
+            margin: 24px 0;
+            font-size: 0.75rem;
+            border-radius: 6px;
+        }
+
+        .loader {
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 0.8s linear infinite;
+            margin: 24px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .result-score { font-size: 4rem; font-weight: 800; color: var(--accent); margin: 20px 0 10px 0; letter-spacing: -1px; }
+        .badge { background: #eff6ff; color: var(--accent); border: 1px solid #bfdbfe; padding: 6px 16px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="ad-space">
+        <!-- TOP BANNER AD PLACEHOLDER -->
+        Advertisement
+    </div>
+
+    <div id="start-screen" class="quiz-box active">
+        <div class="logo-area">GCAA / Standardized Testing</div>
+        <h1>Cognitive Performance & IQ Evaluation</h1>
+        <p class="subtitle">This standardized cognitive analysis measures logic, spatial reasoning, and pattern recognition. Only 2.4% of participants achieve a tier-1 score (120+).</p>
+        <button class="start-btn" onclick="startQuiz()">Begin Assessment</button>
+    </div>
+
+    <div id="q1" class="quiz-box">
+        <p class="subtitle">Section 1: Logic & Sequences (Q 1/5)</p>
+        <div class="question">Complete the logical integer sequence based on conditional subset distribution constraints: 0, 1, 1, 2, 1, 2, 2, ...</div>
+        <div class="options">
+            <button class="option-btn" onclick="nextQuestion(1, 0)">3</button>
+            <button class="option-btn" onclick="nextQuestion(1, 1)">2</button>
+            <button class="option-btn" onclick="nextQuestion(1, 0)">1</button>
+            <button class="option-btn" onclick="nextQuestion(1, 0)">0</button>
+        </div>
+    </div>
+
+    <div id="q2" class="quiz-box">
+        <p class="subtitle">Section 2: Abstract Reasoning (Q 2/5)</p>
+        <div class="question">If a system processes 6,210 variables simultaneously, and 1 core function is terminated while 9 peripheral parameters are restricted, what is the net operational density?</div>
+        <div class="options">
+            <button class="option-btn" onclick="nextQuestion(2, 1)">6,209 units</button>
+            <button class="option-btn" onclick="nextQuestion(2, 0)">6,200 units</button>
+            <button class="option-btn" onclick="nextQuestion(2, 0)">6,201 units</button>
+            <button class="option-btn" onclick="nextQuestion(2, 0)">Density remains variable based on external algorithmic indexing</button>
+        </div>
+    </div>
+
+    <div id="q3" class="quiz-box">
+        <p class="subtitle">Section 3: Behavioral Psychology (Q 3/5)</p>
+        <div class="question">When an individual allocates substantial resources to a comprehensive task, but external validation is completely withheld upon completion, what is the primary psychological reflex?</div>
+        <div class="options">
+            <button class="option-btn" onclick="nextQuestion(3, 0)">Immediate cognitive decline and loss of motivation</button>
+            <button class="option-btn" onclick="nextQuestion(3, 1)">Acute frustration combined with a sudden surge in future execution speed</button>
+            <button class="option-btn" onclick="nextQuestion(3, 0)">Neutral adaptation to structural system inconsistencies</button>
+            <button class="option-btn" onclick="nextQuestion(3, 0)">Data preservation within the subconscious memory hierarchy</button>
+        </div>
+    </div>
+
+    <div id="q4" class="quiz-box">
+        <p class="subtitle">Section 4: Evolutionary Anthropology (Q 4/5)</p>
+        <div class="question">According to modern evolutionary sociology, what core mechanism drove the social validation patterns of early Homo sapiens?</div>
+        <div class="options">
+            <button class="option-btn" onclick="nextQuestion(4, 0)">Strict structural compliance with local tribal hierarchies</button>
+            <button class="option-btn" onclick="nextQuestion(4, 1)">An ancient, deep-rooted psychological instinct targeting group belonging and peer-to-peer tracking</button>
+            <button class="option-btn" onclick="nextQuestion(4, 0)">Algorithmic adaptation to changing environmental resources</button>
+            <button class="option-btn" onclick="nextQuestion(4, 0)">Automated language syntax processing</button>
+        </div>
+    </div>
+
+    <div id="q5" class="quiz-box">
+        <p class="subtitle">Section 5: Analytical Evaluation (Q 5/5)</p>
+        <div class="question">An external observer states: "Your methodology lacks fundamental value." What does this interaction primarily indicate regarding the observer?</div>
+        <div class="options">
+            <button class="option-btn" onclick="nextQuestion(5, 0)">A valid, metrics-based critique of your structural process</button>
+            <button class="option-btn" onclick="nextQuestion(5, 0)">A localized failure in system communication parameters</button>
+            <button class="option-btn" onclick="nextQuestion(5, 1)">A deliberate, low-effort strategic provocation designed solely to attract attention and engagement</button>
+            <button class="option-btn" onclick="nextQuestion(5, 0)">An institutional request for formal verification</button>
+        </div>
+    </div>
+
+    <div id="loading-screen" class="quiz-box">
+        <h2>Analyzing Cognitive Data...</h2>
+        <p class="subtitle">Calculating response latency, processing speed, and accuracy tiers relative to the global benchmark database.</p>
+        <div class="loader"></div>
+        <div class="ad-space" style="background: #ffffff; padding: 20px;">
+            <!-- INTERSTITIAL NATIVE AD PLACEHOLDER -->
+            <p style="margin:0 0 10px 0; font-size:0.8rem; font-weight:600;">Verification Sponsor</p>
+            [Loading Sponsored Content...]
+        </div>
+    </div>
+
+    <div id="result-screen" class="quiz-box">
+        <h2>Assessment Complete</h2>
+        <div class="result-score" id="score-display">--</div>
+        <div class="badge" id="badge-display">Calculating...</div>
+        <p id="desc-display" style="line-height: 1.6; margin-top: 20px; color: var(--text-main); font-size: 0.95rem; text-align: left;"></p>
+        <button class="start-btn" style="margin-top: 24px; background-color: var(--accent);" onclick="location.reload()">Retake Assessment</button>
+    </div>
+
+    <div class="ad-space">
+        <!-- BOTTOM BANNER AD PLACEHOLDER -->
+        Advertisement
+    </div>
+</div>
+
+<script>
+    let correctAnswers = 0;
+
+    function startQuiz() {
+        document.getElementById('start-screen').classList.remove('active');
+
+document.getElementById('q1').classList.add('active');
+}
+function nextQuestion(currentNum, isCorrect) {
+if(isCorrect) correctAnswers++;
+document.getElementById('q' + currentNum).classList.remove('active');
+if (currentNum < 5) {
+document.getElementById('q' + (currentNum + 1)).classList.add('active');
+} else {
+showResults();
+}
+}
+function showResults() {
+document.getElementById('loading-screen').classList.add('active');
+setTimeout(() => {
+document.getElementById('loading-screen').classList.remove('active');
+document.getElementById('result-screen').classList.add('active');
+let finalIQ = 0;
+let badge = "";
+let desc = "";
+if (correctAnswers >= 4) {
+finalIQ = Math.floor(Math.random() * (146 - 139 + 1)) + 139;
+badge = "Superior Cognitive Tier (Top 0.4%)";
+desc = "Your evaluation demonstrates an exceptional capacity for complex abstract reasoning and logic tracking. Your cognitive metrics align closely with historically significant analytical minds. You possess strong immunity to standardized groupthink and structural social biases.";
+} else if (correctAnswers >= 2) {
+finalIQ = Math.floor(Math.random() * (135 - 124 + 1)) + 124;
+badge = "High Analytical Intelligence (Top 2.8%)";
+desc = "Your performance metrics sit significantly above the global average. You display strong pattern recognition and defensive cognitive frameworks against online social manipulation, though occasional technical anomalies still impact your processing efficiency.";
+} else {
+finalIQ = Math.floor(Math.random() * (119 - 112 + 1)) + 112;
+badge = "Advanced Strategic Aptitude (Top 11%)";
+desc = "Your results indicate solid baseline intelligence with a strong emphasis on practical, real-world dynamics rather than dry academic metrics. Your brain prioritizes high-speed interactive environments over complex sequential data calculations.";
+}
+document.getElementById('score-display').innerText = finalIQ;
+document.getElementById('badge-display').innerText = badge;
+document.getElementById('desc-display').innerText = desc;
+}, 3000);
+}
+
+
